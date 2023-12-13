@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+// Define Person record structure
+struct Person {
+  std::string name;
+  std::string dob;
+  std::string phone_number;
+
+  // Operator overload for comparison (sorting) based on name
+  bool operator<(const Person& other) const {
+    return this->name < other.name;
+  }
+
+  // Print function for displaying person information
+  void print() const {
+    std::cout << "Name: " << name << std::endl;
+    std::cout << "Date of Birth: " << dob << std::endl;
+    std::cout << "Phone Number: " << phone_number << std::endl;
+    std::cout << std::endl;
+  }
+};
+
+int main() {
+  // Create a vector of Person records
+  std::vector<Person> people;
+
+  // Add some sample Person records
+  people.push_back({"John Doe", "1980-01-01", "123-456-7890"});
+  people.push_back({"Jane Smith", "1975-02-02", "987-654-3210"});
+  people.push_back({"Alice Miller", "1990-03-03", "555-555-5555"});
+
+  // Check if the vector is not empty before sorting
+  if (!people.empty()) {
+    // Sort the vector of Person records by name using STL sort
+    std::sort(people.begin(), people.end());
+
+    // Print the sorted list of people
+    std::cout << "List of people (sorted by name):" << std::endl;
+    for (const Person& person : people) {
+      person.print();
+    }
+
+    // Search for a specific person by name using STL find
+    std::string search_name = "Alice Miller";
+    auto it = std::find_if(people.begin(), people.end(),
+                          [&search_name](const Person& person) { return person.name == search_name; });
+
+    // Check if the person was found
+    if (it != people.end()) {
+      std::cout << "Found " << search_name << ":" << std::endl;
+      it->print();
+    } else {
+      std::cout << "Person with name " << search_name << " not found." << std::endl;
+    }
+  } else {
+    std::cout << "No people records to display." << std::endl;
+  }
+
+  return 0;
+}

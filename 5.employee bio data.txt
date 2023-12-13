@@ -1,0 +1,82 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Personal Record Class
+class PersonalRecord {
+protected:
+    string name;
+    int age;
+    string address;
+    string contact;
+
+public:
+    PersonalRecord(const string& n, int a, const string& addr, const string& cont)
+        : name(n), age(a), address(addr), contact(cont) {}
+
+    void displayPersonalRecord() {
+        cout << "Name: " << name << endl;
+        cout << "Age: " << age << endl;
+        cout << "Address: " << address << endl;
+        cout << "Contact: " << contact << endl;
+    }
+};
+
+// Professional Record Class
+class ProfessionalRecord {
+protected:
+    string company;
+    string designation;
+    int experience;
+
+public:
+    ProfessionalRecord(const string& comp, const string& desig, int exp)
+        : company(comp), designation(desig), experience(exp) {}
+
+    void displayProfessionalRecord() {
+        cout << "Company: " << company << endl;
+        cout << "Designation: " << designation << endl;
+        cout << "Experience: " << experience << " years" << endl;
+    }
+};
+
+// Academic Record Class
+class AcademicRecord {
+protected:
+    string degree;
+    int yearOfPassing;
+    double cgpa;
+
+public:
+    AcademicRecord(const string& deg, int year, double cgpa)
+        : degree(deg), yearOfPassing(year), cgpa(cgpa) {}
+
+    void displayAcademicRecord() {
+        cout << "Degree: " << degree << endl;
+        cout << "Year of Passing: " << yearOfPassing << endl;
+        cout << "CGPA: " << cgpa << endl;
+    }
+};
+
+// Employee Bio-Data Class using Multiple Inheritance
+class EmployeeBioData : public PersonalRecord, public ProfessionalRecord, public AcademicRecord {
+public:
+    EmployeeBioData(const string& n, int a, const string& addr, const string& cont,
+                    const string& comp, const string& desig, int exp,
+                    const string& deg, int year, double cgpa)
+        : PersonalRecord(n, a, addr, cont), ProfessionalRecord(comp, desig, exp), AcademicRecord(deg, year, cgpa) {}
+
+    void displayBioData() {
+        cout << "Employee Bio-Data" << endl;
+        displayPersonalRecord();
+        displayProfessionalRecord();
+        displayAcademicRecord();
+    }
+};
+
+int main() {
+    EmployeeBioData emp1("John Doe", 30, "123 Main St", "john.doe@example.com", "XYZ Corp",
+                         "Software Engineer", 5, "Bachelor's in Computer Science", 2015, 3.7);
+    emp1.displayBioData();
+    return 0;
+}

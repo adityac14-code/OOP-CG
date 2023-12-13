@@ -1,0 +1,48 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+class Student {
+    char Name[20];
+    int roll_no;
+
+public:
+    void accept() {
+        cin >> Name;
+        cin >> roll_no;
+    }
+
+    void display() {
+        cout << "\n  Name:" << Name;
+        cout << "\n  Roll No:" << roll_no;
+    }
+};
+
+int main() {
+    Student o[5];
+    fstream f;
+    ofstream os;
+    os.open("d:\\test.dat", ios::trunc | ios::binary);
+    cout << "\n Enter Number of Students:" << endl;
+    int n;
+    cin >> n;
+
+    cout << "\n Enter Information:" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << "\n Enter information of Student " << i + 1 << endl;
+        o[i].accept();
+        os.write((char*)&o[i], sizeof(o[i]));
+    }
+    os.close();
+
+    ifstream is;
+    is.open("d:\\test.dat", ios::binary);
+    cout << "\n Student Data:" << endl;
+    for (int i = 0; i < n; i++) {
+        is.read((char*)&o[i], sizeof(o[i])); // Changed from f.write to is.read
+        o[i].display();
+    }
+    is.close();
+
+    return 0;
+}

@@ -1,0 +1,99 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class My_Exception {
+public:
+    int age;
+    double income;
+    char city[20];
+    bool fourWheeler;
+    char msg[50];
+
+    My_Exception() {
+        strcpy(msg, "");
+        age = 0;
+        strcpy(city, "");
+        fourWheeler = false;
+    }
+
+    My_Exception(char s[50], int i) {
+        strcpy(msg, s);
+        age = i;
+    }
+
+    My_Exception(char s[50], double i) {
+        strcpy(msg, s);
+        income = i;
+    }
+
+    My_Exception(char s[50], char* i) {
+        strcpy(msg, s);
+        strcpy(city, i);
+    }
+
+    My_Exception(char s[50], bool i) {
+        strcpy(msg, s);
+        fourWheeler = i;
+    }
+};
+
+int Mystrcmp(const char* str1, const char* str2) {
+    return strcmp(str1, str2);
+}
+
+int main() {
+    int Age;
+    double Income;
+    char City[20] = {};
+    const char c[4][20] = {"Pune", "Mumbai", "Bangalore", "Chennai"};
+    bool FourWheeler = false;
+
+    try {
+        cout << "Enter age (between 18 and 55): ";
+        cin >> Age;
+        if (Age < 18 || Age > 55) {
+            throw My_Exception("Age criterion does not meet", Age);
+        }
+        cout << "Age: " << Age << endl;
+
+        cout << "Enter income (between 50000 and 100000): ";
+        cin >> Income;
+        if (Income < 50000 || Income > 100000) {
+            throw My_Exception("Income criterion does not meet", Income);
+        }
+        cout << "Income: " << Income << endl;
+
+        cout << "Enter 1 if the person has a fourwheeler, otherwise 0: ";
+        cin >> FourWheeler;
+        if (!FourWheeler) {
+            throw My_Exception("Fourwheeler criterion does not meet", FourWheeler);
+        }
+        cout << "Fourwheeler: " << FourWheeler << endl;
+
+        cin.ignore();  // Ignore newline character left in the buffer
+
+        cout << "Enter City Name: ";
+        cin.getline(City, sizeof(City));
+
+        int cityIndex = -1;
+        for (int i = 0; i < 4; i++) {
+            if (Mystrcmp(City, c[i]) == 0) {
+                cityIndex = i;
+                break;
+            }
+        }
+
+        if (cityIndex == -1) {
+            throw My_Exception("City criterion does not meet", City);
+        } else {
+            cout << "City: " << City << endl;
+        }
+
+        cout << endl;
+    } catch (My_Exception obj) {
+        cout << "Error!!! " << obj.msg << endl;
+    }
+
+    return 0;
+}

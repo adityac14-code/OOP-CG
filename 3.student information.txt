@@ -1,0 +1,91 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Student {
+private:
+    string name;
+    int rollNumber;
+    string className;
+    char division;
+    string dob;
+    string bloodGroup;
+    string contactAddress;
+    string telephoneNumber;
+    string drivingLicenseNumber;
+
+public:
+    // Default constructor
+    Student()
+        : name("Unknown"), rollNumber(0), className("Unknown"), division('A'),
+          dob("01-01-2000"), bloodGroup("A+"), contactAddress("Unknown"),
+          telephoneNumber("N/A"), drivingLicenseNumber("N/A") {}
+
+    // Parameterized constructor
+    Student(string n, int roll, string cls, char div, string d, string blood,
+            string address, string phone, string license)
+        : name(n), rollNumber(roll), className(cls), division(div), dob(d),
+          bloodGroup(blood), contactAddress(address),
+          telephoneNumber(phone), drivingLicenseNumber(license) {}
+
+    // Copy constructor
+    Student(const Student& other)
+        : name(other.name), rollNumber(other.rollNumber),
+          className(other.className), division(other.division), dob(other.dob),
+          bloodGroup(other.bloodGroup), contactAddress(other.contactAddress),
+          telephoneNumber(other.telephoneNumber),
+          drivingLicenseNumber(other.drivingLicenseNumber) {}
+
+    // Destructor
+    ~Student() {
+        // Cleanup code, if needed
+    }
+
+    friend ostream& operator<<(ostream& os, const Student& student) {
+        os << "Name: " << student.name << endl;
+        os << "Roll Number: " << student.rollNumber << endl;
+        os << "Class: " << student.className << " Division: " << student.division << endl;
+        os << "Date of Birth: " << student.dob << endl;
+        os << "Blood Group: " << student.bloodGroup << endl;
+        os << "Contact Address: " << student.contactAddress << endl;
+        os << "Telephone Number: " << student.telephoneNumber << endl;
+        os << "Driving License Number: " << student.drivingLicenseNumber << endl;
+        return os;
+    }
+
+    friend istream& operator>>(istream& is, Student& student) {
+        cout << "Enter Name: ";
+        is >> student.name;
+        cout << "Enter Roll Number: ";
+        is >> student.rollNumber;
+        cout << "Enter Class: ";
+        is >> student.className;
+        cout << "Enter Division: ";
+        is >> student.division;
+        cout << "Enter Date of Birth: ";
+        is >> student.dob;
+        cout << "Enter Blood Group: ";
+        is >> student.bloodGroup;
+        cout << "Enter Contact Address: ";
+        is >> student.contactAddress;
+        cout << "Enter Telephone Number: ";
+        is >> student.telephoneNumber;
+        cout << "Enter Driving License Number: ";
+        is >> student.drivingLicenseNumber;
+        return is;
+    }
+};
+
+int main() {
+    Student student1;
+    cout << "Default Student Information:" << endl;
+    cout << student1 << endl;
+
+    Student student2;
+    cout << "Enter Student Information:" << endl;
+    cin >> student2;
+    cout << "Student Information:" << endl;
+    cout << student2 << endl;
+
+    return 0;
+}

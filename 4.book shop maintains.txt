@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Book {
+private:
+    string author;
+    string title;
+    double price;
+    string publisher;
+    int stock;
+
+public:
+    // Constructor to initialize book details
+    Book(string author, string title, double price, string publisher, int stock)
+        : author(author), title(title), price(price), publisher(publisher), stock(stock) {}
+
+    // Member function to check availability and calculate cost
+    bool checkAvailability(int numCopies) {
+        if (stock >= numCopies) {
+            cout << "Book Details:" << endl;
+            cout << "Author: " << author << endl;
+            cout << "Title: " << title << endl;
+            cout << "Price: $" << price << endl;
+            cout << "Publisher: " << publisher << endl;
+            double totalCost = price * numCopies;
+            cout << "Total Cost for " << numCopies << " copy/copies: $" << totalCost << endl;
+            stock -= numCopies;
+            return true;
+        } else {
+            cout << "Required copies not in stock." << endl;
+            return false;
+        }
+    }
+
+    // Getter function for title
+    string getTitle() const {
+        return title;
+    }
+
+    // Getter function for author
+    string getAuthor() const {
+        return author;
+    }
+};
+
+int main() {
+    // Create an array of Book objects
+    const int numBooks = 2;
+    Book books[numBooks] = {
+        Book("Author1", "Title1", 20.0, "Publisher1", 10),
+        Book("Author2", "Title2", 25.0, "Publisher2", 5)
+    };
+
+    // User input for book details
+    string title, author;
+    cout << "Enter book title: ";
+    cin >> title;
+    cout << "Enter book author: ";
+    cin >> author;
+
+    // Search for the requested book
+    bool bookFound = false;
+    for (int i = 0; i < numBooks; ++i) {
+        if (title == books[i].getTitle() && author == books[i].getAuthor()) {
+            int numCopies;
+            cout << "Enter the number of copies required: ";
+            cin >> numCopies;
+            bookFound = books[i].checkAvailability(numCopies);
+            break;
+        }
+    }
+
+    if (!bookFound) {
+        cout << "Book not found." << endl;
+    }
+
+    return 0;
+}
